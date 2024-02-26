@@ -13,4 +13,4 @@ const newUser: tuUser = [112, "email@email.com"];
 
 // Keep in mind that you can override the values or use other array methods
 newUser[1] = "hc.com";
-newUser.push(true);
+// newUser.push(true);
