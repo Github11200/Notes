@@ -1,0 +1,74 @@
+    -> There are many different database technologies, such as MongoDB, MySQL, Veras, and many more. Node has packages to work with most of these options.
+
+    -> And most of these options fall into two categories: Either SQL or NoSQL.
+
+
+====================================================================================
+                                        SQL
+====================================================================================
+
+    -> SQL stands for structured query language. The key word here is structured, meaning the data stored inside is structured.
+
+    -> The database knows and cares about the structure, and the tables that store the data must be designed with that in mind.
+
+    -> The object classes, which represent the items that will go into those structured tables, must also be designed.
+
+    -> There is a lot of up-front design work in doing so, but also some performance and query benefits in some cases.
+
+    -> Sometimes performance hits from overhead.
+
+
+====================================================================================
+                                       NoSQL
+====================================================================================
+
+    -> No structure, just collections of any data.
+
+    -> Less or no up-front design because we just put data into collections without paying much attention to the structure.
+
+    -> Less performance increases in some cases, and sometimes performance gains.
+
+
+====================================================================================
+                                No Perfect Solution
+====================================================================================
+
+    -> It depends on knowing and understanding your requirements.
+
+    -> A good analogy from stack overflow is thinking of SQL like an automatic car, where a lot of the manual work is done
+    for you, and some performance improvements, in other cases. And NoSQL is like a manual, or standard car.
+
+    -> Something to keep in mind is that there are some databases that share the features of SQL and NoSQL.
+
+    -> For an introductory project where you are learning to work with a database, a NoSQL database might be a bit easier to get started with.
+    A good choice to start with is MongoDB, as it is often used in the mean stack.
+
+
+====================================================================================
+                                   Set up MongoDB
+====================================================================================
+
+    -> We could download and run Mongo DB locally, but then when it comes time to publishing the app, we will need to host it separately or find a third party host for it.
+
+    -> We will use a service that offers free hosting called mLab.
+
+
+====================================================================================
+                                    Mongoose
+====================================================================================
+
+    -> Mongoose allows us to elegantly work with our mongodb database with object schemas.
+
+    -> Object schemas are JavaScript objects we create that will represent the type of data we will be putting in our database.
+
+    -> Even though mongodb is NoSQL, and does not have structure, with Mongoose, there is a bit of structure we must design initially. This gives us some benefits
+    of easily interacting with our data through objects, and other things such as validation.
+
+    -> Let's connect to our mLab database. We will first need the connection string.
+
+    -> Then require('mongoose') and use the .connect() function to connect to the database.
+
+
+====================================================================================
+                        Saving data to MongoDB with Mongoose
+====================================================================================

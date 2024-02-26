@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>React ⚛️</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            // This is a component, and you can see that it is returning JSX
+            function Header() {
+                return (
+                    <header>
+                        <h1>Eve's Kitchen</h1>
+                    </header>
+                );
+            }
+
+            function Main() {
+                // You can also do something like this and inject this into the html
+                let multiply = 2 * 4;
+
+                return (
+                    <section>
+                        <p>{multiply} serve the most delicious food around</p>
+                    </section>
+                );
+            }
+
+            // This component returns both of the components above and then we pass that into the ReactDOM.render() function
+            function App() {
+                return (
+                    <div>
+                        <Header />
+                        <Main />
+                    </div>
+                );
+            }
+
+            // Here we are passing in app, and that is the syntax to do so, and you cannot put <Header /> and <Main /> on the same line because
+            // React likes to render a single component.
+            ReactDOM.render(<App />, document.getElementById("root"));
+        </script>
+    </body>
+</html>

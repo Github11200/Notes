@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>React ⚛️</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            // This is a component, and you can see that it is returning JSX
+            function Header(props) {
+                return (
+                    <header>
+                        <h1>{props.name} Kitchen</h1>
+                    </header>
+                );
+            }
+
+            // In this function we will display all of the values from the dish object, and set the keys to the ids
+            function Main(props) {
+                return (
+                    <section>
+                        <ul>
+                            {props.dishes.map((dish) => (
+                                <li key={dish.id}>{dish.title}</li>
+                            ))}
+                        </ul>
+                    </section>
+                );
+            }
+
+            function Footer(props) {
+                return (
+                    <footer>
+                        <p>Copyright {props.year}</p>
+                    </footer>
+                );
+            }
+
+            // This is an array of dishes which is being mapped out and then displayed from the Main() component
+            const dishes = [
+                "Black Bean Soup",
+                "Macaroni and Chess",
+                "Salmon and Potatoes",
+            ];
+
+            // This object maps out the dishes into objects, which are then displayed using the Main component
+            // NOTE: When returning an object using an arrow function you also need to add in () and not just {}
+            const dishObjects = dishes.map((dishes, i) => ({
+                id: i,
+                title: dish,
+            }));
+
+            // You can see how to pass in an array, it is the same as passing in something like an integer
+            function App() {
+                return (
+                    <div>
+                        <Header name="Jinay's" />
+                        <Main adjective="amazing" dishes={dishObjects} />
+                        <Footer year={new Date().getFullYear() - 1} />
+                    </div>
+                );
+            }
+
+            // Here we are passing in app, and that is the syntax to do so, and you cannot put <Header /> and <Main /> on the same line because
+            // React likes to render a single component.
+            ReactDOM.render(<App />, document.getElementById("root"));
+        </script>
+    </body>
+</html>

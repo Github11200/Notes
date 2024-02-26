@@ -1,0 +1,166 @@
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                      ALL OF THE CODE FOR THIS SECTION IS IN THE APP.JS FILE INSIDE OF THE SRC FOLDER INSIDE OF THE REACT-APP FOLDER
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+==============================================================================
+                    Working with uncontrolled componenets
+==============================================================================
+
+    -> Lets say we wanted to collect some information from the checkbox that we had created in the last chapter.
+
+    -> We can use the useRef library to do this, and you can think of the function useRef() as a way to get to some sort of UI element and get its value.
+
+    -> We can do this in a form, and lets say we have a text field, then we can use useRef() and when the form is submitted you can get the value by doing
+    something like txtTitle.current.value and txtTitle is the variable that was initialized as const txtTitle = useRef().
+
+    -> But the form that we are creating the example in is an uncontrolled component, so we are creating a little container and getting the value.
+
+import "./App.css";
+import { useRef } from "react";
+
+function App() {
+    const txtTitle = useRef();
+    const hexColor = useRef();
+
+    const submit = (e) => {
+        e.preventDefault();
+        const title = txtTitle.current.value;
+        const color = hexColor.current.value;
+        alert(`${title}, ${color}`);
+        txtTitle.current.value = "";
+        hexColor.current.value = "#FFFFFF";
+    };
+
+    return (
+        <form onSubmit={submit}>
+            <input ref={txtTitle} type="text" placeholder="color title..." />
+            <input ref={hexColor} type="color" />
+            <button>ADD</button>
+        </form>
+    );
+}
+
+export default App;
+
+    -> NOTE: Unlike useState, where the component will rerender if there is a change, useRef() is not going to rerender and we always have to reach out to the current
+    value.
+
+==============================================================================
+                      Creating controlled form elements
+==============================================================================
+
+    -> It's also possible to manage forms using state. So this useRef, anytime we see useRef being used we are creating what's called an uncontrolled component where
+    we manage our form elements outside of state but using state for this is a really good idea too.
+
+    -> Whenever we see a state value being used with a form. We want to think about this as being a controlled component, controlled meaning that we're controlling
+    our form by creating state values for these form elements.
+
+    -> The example of using the useState() function instead of the useRef() function is shown below:
+
+import "./App.css";
+import { useState } from "react";
+
+function App() {
+    const [title, setTitle] = useState("");
+    const [color, setColor] = useState("#000000");
+
+    const submit = (e) => {
+        e.preventDefault();
+        alert(`${title}, ${color}`);
+        setTitle("");
+        setColor("#000000");
+    };
+
+    return (
+        <form onSubmit={submit}>
+            <input
+                value={title}
+                type="text"
+                placeholder="color title..."
+                onChange={(event) => setTitle(event.target.value)}
+            />
+            <input
+                value={color}
+                type="color"
+                onChange={(event) => setColor(event.target.value)}
+            />
+            <button>ADD</button>
+        </form>
+    );
+}
+
+export default App;
+
+==============================================================================
+                            Building a custom Hook
+==============================================================================
+
+    -> We've seen how React hooks can add additional functionality to our applications. We can use the state hook to manage state of form fields.
+    We can use ref to reach out to these inputs and figure out their values. And we've also used useEffect to perform side effects.
+
+    -> Now, one of the most exciting things about working with hooks is that we can create our own custom hooks that can be used inside of our
+    applications to handle all sorts of different things.
+
+    -> A custom hook is a function and this function is always going to start with the keyword use (for example useInput()).
+
+    -> We want to think about a hook as being very reusable. We can share it across our project, we can write tests for this function and then we
+    can use it inside of our form any time we need to process some user input.
+
+    -> The program for a custom hook function is shown below:
+
+import "./App.css";
+import { useState } from "react";
+
+function useInput(initialValue) {
+    const [value, setValue] = useState(initialValue);
+    return [
+        { value, onChange: (e) => setValue(e.target.value) },
+        () => setValue(initialValue),
+    ];
+}
+
+function App() {
+    const [titleProps, resetTitle] = useInput("");
+    const [colorProps, resetColor] = useInput("#000000");
+
+    const submit = (e) => {
+        e.preventDefault();
+        alert(`${titleProps.value}, ${colorProps.value}`);
+        resetTitle("");
+        resetColor("#000000");
+    };
+
+    return (
+        <form onSubmit={submit}>
+            <input
+                // The spread operator is basically taking an object with properties {red: 255, green: 0, blue: 0} then converting it to
+                // <input red={255} green={0} blue={0} type="color" />
+                {...titleProps} // This is a syntax that we're using to basically spread all of the properties into this input, USE IT SPARINGLY
+                type="text"
+                placeholder="color title..."
+            />
+            <input {...colorProps} type="color" />
+            <button>ADD</button>
+        </form>
+    );
+}
+
+export default App;
+
+==============================================================================
+                            Choosing a form library
+==============================================================================
+
+    -> There are also a lot of form libraries to use instead of creating your own hooks for forms.
+
+    -> Some of these libraries include:
+
+        ~ Formik - This is a great way of being able to, basically, handle submitting these forms. We can take in initial values and think about the
+        form holistically as a collection of different fields. The link is https://formik.org.
+
+        ~ React Hook Form - This helps us with creating forms that use validation. Of course, react hooks are in play with this one as well. And there's
+        a lot of cool things in the API for type script and other advanced features that you can use to create some really scalable forms.
+        The link is https://react-hook-form.com.
+
+        ~ useHooks - This is not form specific, but there are a ton of different resources here, a ton of different hooks that you can think of as being,
+        sort of, like recipes for creating different types of hooks. https://usehooks.com.

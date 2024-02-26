@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <!--Quick way to get react to the page-->
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <title>React ⚛️</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/javascript">
+            // Now we can save this function in a seperate variable because we react we can think of the elemetns as little bits of UI that we can redner at any moment
+            let ul = React.createElement(
+                "ul", // This is what we want to create
+                { style: { color: "blue" } }, // This is any properties we want to send
+                React.createElement("li", null, "Monday"), // This is what we want to put inside the element
+                React.createElement("li", null, "Tuesday"),
+                React.createElement("li", null, "Wednesday")
+            );
+
+            // This will render a ul element with li tags inside of it once you add in babel (shown in the next section of notes)
+            ReactDOM.render(
+                <ul>
+                    <li>Hi</li>
+                    <li>Bye</li>
+                    <li>Salut</li>
+                </ul>,
+                document.getElementById("root")
+            );
+        </script>
+    </body>
+</html>

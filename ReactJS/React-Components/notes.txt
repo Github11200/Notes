@@ -1,0 +1,72 @@
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                      FOR EACH SECTION YOU CAN GO TO THE CORRESPONDING NAME OF HTML FILE WHICH WILL CONTAIN THE CODE AND SOME OTHER COMMENTS.
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+==============================================================================
+                          Creating a React Component
+==============================================================================
+
+    -> Think of a component like being a little building block. It's a piece of the user interface that we'll use to describe one part of our application.
+
+    -> A component is just a JavaScript function that returns JSX.
+
+    -> Now, with JSX, we can, in addition to creating these HTML elements, we can also render components. So any time we're creating a component, a couple
+    of things to think about. We want to use a capital letter and we also want to create this as a function.
+
+    -> We might see an error right here that says that adjacent JSX elements must be wrapped in an enclosing tag (if you have added in two components
+    beside each other). React always wants to render a single component. So we could wrap this in say a div.
+
+==============================================================================
+                          Adding componenet properties
+==============================================================================
+
+    -> You want to think about the props object as being this little container where you can place information in for any component. When we render the component,
+    we'll pass the properties into the component. And then within that component, we'll reference them in the props object with dot notation.
+
+    -> You can pass the prop object into react components which contain properties with information that you want to display. For example, when you go to use
+    the component you can pass in <Header name="Jinay" /> and the props object will have a property called name set to Jinay which you can access in the component.
+    
+    -> If you want to pass in other things to the props object, like an integer, then it has to be inside a set of curly braces, an example is {new Date().getFullYear()}.
+
+    -> NOTE: Each props object that is sent to a component is its own object, and is not the same with the props object passed in another component, for example if you
+    passed in name="Jinay" into the props object of one component then it will not be accessible in another component.
+
+==============================================================================
+                             Working with lists
+==============================================================================
+
+    -> You can pass in an array just like you pass in things like integers, booleans, etc.
+
+    -> Then if you want to display the array you can use the map() function and if you want to display it onto a list, that is shown in the WorkingWithLists.html file.
+
+    -> If you run the code int he WorkingWithLists.html file then there will be an error in the console saying each child in a list should have a unique "key" prop.
+    This will be fixed next.
+
+==============================================================================
+                          Adding keys to list items
+==============================================================================
+
+    -> So the reason that the error appears from the last example is that it's possible that things might get out of sync when rendering occurs, particularly if something
+    is added to the front of that list, or somewhere in the middle.
+
+    -> Think of a key as being an ID that keeps everything in sync.
+
+    -> We can create a list object with will contain multiple objects with their own IDs and titles, and while this may seem like the same thing as before, it is not because
+    now the data is stable since we've created it using the arrow function instead of being created while the list items are being rendered.
+
+==============================================================================
+                         Displaying images with React
+==============================================================================
+
+    -> You can simply add an image by using the <img /> tag, adding in the source (could be the image link or saved locally), optionally a height and/or width, and you should
+    always have alt so that screen readers can describe the image.
+
+==============================================================================
+                               Using fragments
+==============================================================================
+
+    -> If you have to constantly enclose elements inside <div></div> tags (because react likes to render a single element) then it can clutter up the element tree really quickly.
+
+    -> To get around this you can use React.Fragment instead of div, an example is replacing <div></div> with <React.Fragment></React.Fragment>.
+
+    -> There is also another shorthand syntax for this, shown later on, but it applies to specific versions of react.

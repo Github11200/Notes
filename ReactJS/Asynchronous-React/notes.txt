@@ -1,0 +1,268 @@
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                      ALL OF THE CODE FOR THIS SECTION IS IN THE APP.JS FILE INSIDE OF THE SRC FOLDER INSIDE OF THE REACT-APP FOLDER
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+==============================================================================
+                            Fetching data with Hooks
+==============================================================================
+
+    -> Another important thing to know how to do with React is how to fetch data from some external API.
+
+    -> The API that we want to grab some data from is the GitHub API, which you can find at api.github.com/users/ whatever your user ID is. So you can do this for
+    your company, for yourself, whatever you see fit. You would just drop your username after that last slash there.
+
+    -> The other thing we want to do to use Effect of course is just pass in that empty array, meaning that we should only make a request for this data once when our
+    application first renders. So this is super important, right? We want to make sure we're not making too many API requests.
+
+    -> The code for fetching data with hooks is shown below:
+
+import "./App.css";
+import { useState, useEffect } from "react";
+
+function App() {
+    const [data, setData] = useState(null);
+    useEffect(() => {
+        fetch(`https://api.github.com/users/moonhighway`)
+            .then((response) => response.json())
+            .then(setData);
+    }, []);
+    if (data) return <pre>{JSON.stringify(data, null, 2)}</pre>;
+    return <h1>Data</h1>;
+}
+
+export default App;
+
+==============================================================================
+                          Displaying data from an API
+==============================================================================
+
+    -> Now that we have the data from the last lesson we have to actually display the data.
+
+    -> To do this we can create a GithubUser componenet, destructure the values from the data and pass that into the function, and then it can display that data, the
+    code is shown below.
+
+import "./App.css";
+import { useState, useEffect } from "react";
+
+function GithubUser({ name, location, avatar }) {
+    return (
+        <div>
+            <h1>{name}</h1>
+            <p>{location}</p>
+            <img src={avatar} height={150} alt={name} />
+        </div>
+    );
+}
+
+function App() {
+    const [data, setData] = useState(null);
+    useEffect(() => {
+        fetch(`https://api.github.com/users/moonhighway`)
+            .then((response) => response.json())
+            .then(setData);
+    }, []);
+    if (data)
+        return (
+            <GithubUser
+                name={data.name}
+                location={data.location}
+                avatar={data.avatar_url}
+            />
+        );
+    return <h1>Data</h1>;
+}
+
+export default App;
+
+==============================================================================
+                           Handling loading states
+==============================================================================
+
+    -> When we're fetching data from some sort of external API, our data can be in one of a few different states.
+        ~ Loading State - This means that we're fetching the data but it hasn't come back yet.
+        ~ Success State - This means we have some data to display.
+        ~ Error State - This is when something goes wrong (like a 500 error).
+    
+    -> We can represent all of this using useState hooks.
+
+    -> So to do this when can create two more useState arrays for errors and for when it is loading. Then when the data is loading we can set it to true,
+    once it comes it we can set it to false (we can do this by chaining on .then() functions). If there is an error then we can set the error to whatever
+    it is (we can use .catch() to do this), and then we can return the appropriate things depending on how everything went.
+
+    -> The code for this is shown below:
+
+import "./App.css";
+import { useState, useEffect } from "react";
+
+function GithubUser({ name, location, avatar }) {
+    return (
+        <div>
+            <h1>{name}</h1>
+            <p>{location}</p>
+            <img src={avatar} height={150} alt={name} />
+        </div>
+    );
+}
+
+function App() {
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch(`https://api.github.com/users/moonhighway`)
+            .then((response) => response.json())
+            .then(setData)
+            .then(setLoading(false))
+            .catch(setError);
+    }, []);
+
+    if (loading) return <h1>Loading...</h1>;
+    if (error) return <pre>{JSON.stringify(error)}</pre>;
+    if (!data) return null;
+
+    return (
+        <GithubUser
+            name={data.name}
+            location={data.location}
+            avatar={data.avatar_url}
+        />
+    );
+}
+
+export default App;
+
+==============================================================================
+                          Fetching data with GraphQL
+==============================================================================
+
+    -> GraphQL is a way of creating an API where you can specify what data you want by using its field. For this lesson, go to this link
+    https://snowtooth.moonhighway.com/.
+
+    -> You can put the code shown below into the GraphQL playground:
+
+# Write your query or mutation here
+query {
+	allLifts {
+    name
+  } 
+}
+
+    -> The code for this lesson is shown below:
+
+import "./App.css";
+import { useState, useEffect } from "react";
+
+const query = `
+query {
+	allLifts {
+    name
+    elevationGain
+    status
+  } 
+}
+`;
+
+const opts = {
+    method: "POST", // This is the type of method
+    headers: { "Content-Type": "application/json" }, // this is the type of data that will be returned
+    body: JSON.stringify({ query }), // This is stringifying the query data
+};
+
+function Lift({ name, elevationGain, status }) {
+    return (
+        <div>
+            <h1>{name}</h1>
+            <p>
+                {elevationGain} {status}
+            </p>
+        </div>
+    );
+}
+
+function App() {
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch(`https://snowtooth.moonhighway.com/`, opts)
+            .then((response) => response.json())
+            .then(setData)
+            .then(setLoading(false))
+            .catch(setError);
+    }, []);
+
+    if (loading) return <h1>Loading...</h1>;
+    if (error) return <pre>{JSON.stringify(error)}</pre>;
+    if (!data) return null;
+
+    return (
+        <div>
+            {data.data.allLifts.map((lift) => {
+                // We have to use data.data because that is how the data is being returned (you can console.log() to see it all)
+                return (
+                    <Lift
+                        name={lift.name}
+                        elevationGain={lift.elevationGain}
+                        status={lift.status}
+                    />
+                );
+            })}
+        </div>
+    );
+}
+
+export default App;
+
+==============================================================================
+                          Working with render props
+==============================================================================
+
+    -> The final pattern I want to show you with data loading, has to do with how we use functions to display the right data at the right time.
+
+    -> We will be create an array of mountains and their elevationGains then we will just call that function, use the and use the .map() functions
+    to display the data, the code for this is shown below:
+
+import "./App.css";
+
+const tahoe_peaks = [
+    { name: "Freel", elevation: 10891 },
+    { name: "Monument", elevation: 10067 },
+    { name: "Pyramid", elevation: 9983 },
+    { name: "Tallac", elevation: 9735 },
+];
+
+// renderItem will help us render an individual list item
+// renderEmpty is what will be displayed if we don't have anything in the list
+function List({ data, renderItem, renderEmpty }) {
+    return !data.length ? (
+        renderEmpty
+    ) : (
+        <ul>
+            {data.map((item) => {
+                return <li key={item.name}>{renderItem(item)}</li>;
+            })}
+        </ul>
+    );
+}
+
+function App() {
+    return (
+        <List
+            data={tahoe_peaks}
+            renderEmpty={<p>This list is empty</p>}
+            renderItem={(
+                item // Using <></> is a shorthand for <React.Fragment>, and we are using this so that we don't have a lot of nested <div> elements cluttering up our element tree
+            ) => (
+                <>
+                    {item.name} - {item.elevation} ft.
+                </>
+            )}
+        />
+    );
+}
+
+export default App;

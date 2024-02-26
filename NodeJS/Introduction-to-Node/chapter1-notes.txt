@@ -1,0 +1,16 @@
+Understanding Node:
+    -> Node is an open source, cross-platform runtime environment for service-side and networking applications. It is built on top of Chrome's JavaScript runtime, the V8 engine,
+    and so applications for Node are written in JavaScript. This is why many developers like Node, it's lightweight, you can write your front-end and back-end in the same 
+    language, share libraries, reduce code write times and tech stack adoption efforts.
+
+Asynchronous tasks and callbacks:
+    -> When you execute a task synchronously, you wait for it to finish before moving on to another task which is what causes blocking.
+
+    -> When you execute tasks asynchronously, you can move on to another task without having to wait for the previous task to finish.
+
+    -> If we were to make a list of all the things you could do on a computer and ordered them based on their completion time, there
+    would be two that require relatively long waiting times: networking access and file system access.
+
+    -> And with a web app, these are some of the most common functions. This is why Node performs so well for web apps.
+
+    *** Go to AsynchronousTasks.js for more notes. ***

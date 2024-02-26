@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <!--Quick way to get react to the page-->
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <!--This file is for Babel-->
+        <title>React ⚛️</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <!--To use babel, you need to replace text/javascript with text/babel-->
+        <script type="text/babel">
+            let robot = "🤖";
+            let cowboy = "🤠";
+            let moon = "🌑";
+            let name = "React";
+
+            // This will render a ul element with li tags inside of it
+            // NOTE: Anything you put inside of the curly braces will be rendered, such as the example below that contains name.length
+            ReactDOM.render(
+                <ul>
+                    <li>{robot}</li>
+                    <li>{cowboy}</li>
+                    <li>{moon}</li>
+                    <li>{name.toUpperCase()}</li>
+                    <li>{name.length}</li>
+                </ul>,
+                document.getElementById("root")
+            );
+        </script>
+    </body>
+</html>

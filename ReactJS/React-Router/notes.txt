@@ -1,0 +1,271 @@
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                      ALL OF THE CODE FOR THIS SECTION IS IN THE APP.JS FILE INSIDE OF THE SRC FOLDER INSIDE OF THE REACT-APP FOLDER
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+==============================================================================
+                          Installing React Router v6
+==============================================================================
+
+    -> On any website, it's really important to have some sort of mechanism for moving from page to page. Now, with React, we're dealing with different components.
+    So how do we move from component to component when we're dealing with a single-age application? The solution for that is to incorporate React Router.
+
+    -> React Router will allow for us to seamlessly move from page to page by displaying different components.
+
+    -> To install react router you can go into your react app and use npm install react-router dom@6, so we will specifically download version 6.
+
+    -> Then in the App.js we will have the code shown below:
+
+import "./App.css";
+
+function Home() {
+    return (
+        <div>
+            <h1>My Website</h1>
+        </div>
+    );
+}
+
+function About() {
+    return (
+        <div>
+            <h1>About Us</h1>
+        </div>
+    );
+}
+
+function Contact() {
+    return (
+        <div>
+            <h1>Contact Us</h1>
+        </div>
+    );
+}
+
+function App() {
+    return <Home />;
+}
+
+export default App;
+
+==============================================================================
+                           Configuring the Router
+==============================================================================
+
+    -> We need to import BrowserRouter from react-router-dom here. And this is going to be the component that we need to wrap around the app. So warp <BrowserRouter></BrowserRouter>
+    around your app.
+
+    -> We will also import Routs and Route from react-router-dom, and the routes is going to go inside of the browser router. And then here's where we're going to configure, setup
+    all of our different paths that we want to display.
+
+    -> So instead of using <App />, inside of the <Routes></Routes> tag we will add in <Route path="/" element={<App />} />, and this will display the <App /> component.
+
+    -> We can do the same with the <About /> component, but remember that in the index.js file to import { About } from "./App" (and remember to put it within the curly braces) 
+    otherwise it won't find the component, and in the app.js file you also have to export the function so you can use export function about().
+
+    -> We create the path attribute in the <Route /> element if it is set to "/" then it will display the App component, but if you change it to "/about" then in the browser go to
+    localhost:3000/about then it will display the about component.
+
+    -> You can then do this however many times you want to.
+
+    -> Now when you add something like /contact or /about in the URl it will display that component.
+
+    -> The code for this lesson is shown below (it is from the index.js file):
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { App, About, Contact } from "./App"; // Remember to import the components that you create in other files
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+        </Routes>
+    </BrowserRouter>,
+    document.getElementById("root")
+);
+
+    -> Now in the next lesson we want to make the app so that users don't have to keep on typing in the current URL to get to the page they want to go to.
+
+==============================================================================
+                       Incorporating the Link component
+==============================================================================
+
+    -> To use the link component, in the app.js file you have to import { Link } from "react-router-dom".
+
+    -> A quick note, too, that the reason that we're importing everything from React Router DOM is because we're using the DOM. We're using the browser to
+    create a web application. There are React Router tools for React Native as well. So this is why that's split out into its own package.
+
+    -> Now to display the different links you can use the <nav></nav> tags and then the <link></link> tags, and you won't see the link until you add in
+    to="/about" or to="/contact" as an attribute.
+
+    -> The code with all of this put together in the app.js file is shown below:
+
+import "./App.css";
+import { Link } from "react-router-dom";
+
+function Home() {
+    return (
+        <div>
+            <nav>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+            </nav>
+            <h1>My Website</h1>
+        </div>
+    );
+}
+
+export function About() {
+    return (
+        <div>
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+            </nav>
+            <h1>About Us</h1>
+        </div>
+    );
+}
+
+export function Contact() {
+    return (
+        <div>
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+            </nav>
+            <h1>Contact Us</h1>
+        </div>
+    );
+}
+
+export function App() {
+    return <Home />;
+}
+
+==============================================================================
+                      Nesting links with React Router v6
+==============================================================================
+
+    -> The next step we want to take here is we want to create a child page for our About component that's going to display some information about our company's history.
+
+    -> We can first of all export a history function from the app.js file, shown below:
+
+export function History() {
+    return (
+        <div>
+            <h1>Our History</h1>
+        </div>
+    );
+}
+
+    -> Then in the index.js file we can go to the <Route /> tag for the /about page, and instead of having it as <Route /> we will make it <Route></Route> and inside of it
+    we will add in another route tag which is <Route path="History" element={<History />} /> and thsi will go to our history element, the full code for this route compoenent
+    is shown below:
+
+<BrowserRouter>
+    <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/about" element={<About />}>
+            <Route path="History" element={<History />} />
+        </Route>
+        <Route path="/contact" element={<Contact />} />
+    </Routes>
+</BrowserRouter>
+
+    -> This still won't make our app work though, and the history element won't be displayed, and to have it displayed we will have to import the Outlet componeent from
+    "react-router-dom" in the app.js file.
+
+    -> So you want to think about Outlet as being like a little container that's going to display our History component.
+
+    -> So we're displaying this component as soon as I'm on the page about/history. If I remove /history, we'll just see About Us. And then, if I wanted to, I could link to this as well.
+
+    -> The index.js code is shown below:
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { App, About, Contact, History } from "./App"; // Remember to import the components that you create in other files
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/about" element={<About />}>
+                <Route path="history" element={<History />} />
+            </Route>
+            <Route path="/contact" element={<Contact />} />
+        </Routes>
+    </BrowserRouter>,
+    document.getElementById("root")
+);
+
+    -> The App.js code is shown below:
+
+import "./App.css";
+import { Link, Outlet } from "react-router-dom";
+
+function Home() {
+    return (
+        <div>
+            <nav>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+            </nav>
+            <h1>My Website</h1>
+        </div>
+    );
+}
+
+export function About() {
+    return (
+        <div>
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+            </nav>
+            <h1>About Us</h1>
+            <Outlet />
+        </div>
+    );
+}
+
+export function History() {
+    return (
+        <div>
+            <h1>Our History</h1>
+        </div>
+    );
+}
+
+export function Contact() {
+    return (
+        <div>
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+            </nav>
+            <h1>Contact Us</h1>
+        </div>
+    );
+}
+
+export function App() {
+    return <Home />;
+}
+
+    -> A nested route configuration is really a powerful thing because we can then create all sorts of page hierarchies within our application.
+
+    -> It's just important to know that, at some level, we want to have our route configuration created. We define all of the paths, and then we create the element property to display
+    the correct component at the correct time.

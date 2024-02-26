@@ -1,0 +1,57 @@
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                      FOR EACH SECTION YOU CAN GO TO THE CORRESPONDING NAME OF HTML FILE WHICH WILL CONTAIN THE CODE AND SOME OTHER COMMENTS.
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+==============================================================================
+                         Adding React to your project
+==============================================================================                         
+
+    -> In the AddingReactToYourProject.html file there are links to the CDN of react. CDN stands for Content Delivery Network. Think of this link as being a way to
+    quickly add the react library to your page in the browser.
+
+    -> You have to send two things to the reactDOM.render(). The first is the element we want to create. The second is where we want to put this.
+    So we're saying, take this element and put it right here inside of this div.
+
+==============================================================================
+                         Creating React elements
+============================================================================== 
+
+    -> Now, instead of adding in the function of React.createElement() inside of ReactDOM.render(), we should move the createElement() function into its own variable,
+    this is shown in the CreatingReactElements.html file.
+
+==============================================================================
+                        Refactoring elements using JSX
+==============================================================================
+
+    -> In the RefactoringElementsUsingJSX.html file we are changing the h1 heading to a ul, and then creating multiple li elements inside of it.
+
+    -> As our user interface becomes more complex, as we have more createElement calls on the page, our code starts to get a little hectic. And by that I just mean that
+    every single element that I would need to create has to have its own createElement call. So what we want is some sort of a helper, some sort of a syntax to come
+    fix this for us and that helper is called JSX. JSX or JavaScript as XML is an HTML-like syntax for creating UI elements.
+
+    -> ReactDOM.render(
+                <ul>
+                    <li>Hi</li>
+                    <li>Bye</li>
+                    <li>Salut</li>
+                </ul>,
+                document.getElementById("root")
+            );
+
+    -> You cannot use the code above thought because it won't be able to run it and there will be errors. To fix this, we have to use Babel.
+
+==============================================================================
+                             Incorporating Babel
+==============================================================================
+
+    -> So the reason that we're seeing this is because JSX this tag-based syntax is not supported in the browser.
+
+    -> In order to have it supported you need to use Babel, which is a javascript compiler that will take in the JSX and turn it into code that the browser can actually use.
+
+    -> NOTE: You also have to change the type of script from "text/javascript" to "text/babel."
+
+==============================================================================
+                           Working with JSX syntax
+==============================================================================
+
+    -> You can put variables and function calls inside of curly braces in JSX which can let you inject dynamic content.

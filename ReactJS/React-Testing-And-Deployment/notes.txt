@@ -1,0 +1,145 @@
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                      ALL OF THE CODE FOR THIS SECTION IS IN THE APP.JS FILE INSIDE OF THE SRC FOLDER INSIDE OF THE REACT-APP FOLDER
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+==============================================================================
+                Using Create React App as a testing platform
+==============================================================================
+
+    -> With the create react app tool you can also run tests, and it will run tests with files that have the .test extension to them, so in the default project created
+    by the create app tool it will run the App.test.js file.
+
+    -> We can then use the npm test command for it to run the test file.
+
+==============================================================================
+                       Testing small functions with Jest
+==============================================================================
+
+    -> We will create 2 new files in teh src folder called functions.js and functions.test.js.
+
+    -> Create react app already has Jest configured so we can just start writing tests.
+
+    -> As an example, inside of the functions.test.js you can have the code shown below
+
+import timesTwo from "./functions";
+
+test("Multiplies by two", () => {
+    expect(timesTwo(4)).toBe(8);
+});
+
+    -> Basically, the test is that the function timesTwo(4) will return 8 (this function is in a seperate file).
+
+    -> Now, insde of the functions.js file you can have the code shown below:
+
+export default function timesTwo(a) {
+    return a * 2;
+}
+
+    -> This will export the function, and it will take in a parameter a, and return a * 2.
+
+    -> When you run npm test, it will test this, and the test should pass.
+
+    -> There are also a lot of other functions to use other then toBe() and they are all well documented on the Jest docs.
+
+==============================================================================
+                      Introducing React Testing Library
+==============================================================================
+
+    -> Another test utility that's built directly into create React app is React testing library.
+
+    -> To take a look at this utility we will create a new js file called Star.js and Star.test.js.
+
+    -> Now we can create a function inside of Star.js that just displays and <h1> element and we can export that function.
+
+    -> In the Star.test.js file we want to test that it can render the h1 file, so we will import { render } from "@testing-library/react".
+
+    -> Now inside of our text, inside of the callback function here, we're going to say const. So we'll destructure from the render of Star what's called a React
+    testing library query. So think of a query as being a way of selecting a particular element based on some sort of a property. The code is const { getByText } = render(<Star />).
+
+    -> Then we can use the getByText() function and pass in the text as shown, /text/ and save that into a variable. Then we can check for that variabel to have the text Cool Star
+    by using the function toHaveTextContent().
+
+    -> The code in the Star.js file is shown below:
+
+export function Star() {
+    return <h1>Cool Star</h1>;
+}
+
+    -> The code in the Star.test.js file is shown below:
+
+import { render } from "@testing-library/react";
+import { Star } from "./Star";
+
+test("renders an h1", () => {
+    const { getByText } = render(<Star />);
+    const h1 = getByText(/Cool Star/);
+    expect(h1).toHaveTextContent("Cool Star");
+});
+
+    -> So we've been able to render our component without actually having to render it and look at it. We're automating the process of making sure that the right content is in the
+    right place.
+
+==============================================================================
+                   Testing events with React Testing Library
+==============================================================================
+
+    -> Another important part of writing tests is testing events that are part of components.
+
+    -> To test events we have to import { fireEvent, render } from "@testing-library/react" and then we can use the fireEvent() function which will fire and event where we want it to.
+
+    -> The code for Checkbox.js is shown below:
+
+import { useReducer } from "react";
+
+export function Checkbox() {
+    const [checked, setChecked] = useReducer((checked) => !checked, false);
+
+    // Inside the label you have the htmlFor property and this is because if you don't have that it will give an error since you have to associate
+    // the label with the input. So you can use the htmlFor property and then and id in the input with the same name.
+    return (
+        <>
+            <label htmlFor="checked">
+                {checked ? "checked" : "not checked"}
+            </label>
+            <input
+                id="checked"
+                type="checkbox"
+                value={checked}
+                onChange={setChecked}
+            />
+        </>
+    );
+}
+
+    -> The code for Checkbox.test.js is shown below:
+
+import { fireEvent, render } from "@testing-library/react";
+import { Checkbox } from "./Checkbox";
+
+test("Selecting checkbox should change value true", () => {
+    const { getByLabelText } = render(<Checkbox />); // getByLabelText is going to look for whatever we set up in this next value
+
+    // The regx we're adding will look for case sensitivity and we can bypass that by adding in /i after it so even if it is all
+    // caps it will still work. This function is also looking for the label text that is labelled as not checked, which we are setting
+    // from the Checkbox.js file.
+    const checkbox = getByLabelText(/not checked/i);
+
+    // To test for the event firing we can use the fireEvent function
+    fireEvent.click(checkbox);
+    expect(checkbox.checked).toEqual(true);
+});
+
+==============================================================================
+                            Deploying to Netlify
+==============================================================================
+
+    -> One of the tools that you can use to deploy your react application is Netlify.
+
+    -> Once you have an account on Netlify you can run the npm run build command in the terminal here.
+
+    -> This is going to create a production build for our application, meaning that this will be optimized for production.
+
+    -> Then you should see a build folder inside your app, you can then drag this build folder into the Netlify website, and it will create the website for us
+    and we can have it open the website.
+
+    -> You can also change other things like the https protocol, the domain, and a lot of other things.

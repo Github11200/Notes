@@ -1,0 +1,54 @@
+    -> When creating a web application, you can think of it as having a division between two responsibilities. You can either host static content or dynamic content.
+        ~ Static content can be things like HTML files for web sites or images, videos, etc.
+        ~ Dynamic content, on the other hand, is served through a web API, or sometimes it's used to serve dynamic webpages where the content or the view is composed on the server itself.
+
+NOTE: Using -s after install (npm install -s express) it will automatically add the thing you installed to the package.json file
+
+--Go in the order of the files listed below for the notes--
+
+    ***server.js***
+    ***index.html***
+    ***again server.js***
+
+========================================================================================================================================================================
+
+                                                                            SOCKET.IO
+
+========================================================================================================================================================================
+
+    -> We are able to send requests from the client or browser to Node, but there is no way to do it in reverse. There's no way for Node to tell one or more clients,
+    hey, there's a new message, so the only way to achieve this behavior with HTTP requests is to do something called polling.
+    
+    -> With polling, every few seconds we send an HTTP request asking the server, hey, are there any updates? Are there new messages I should display? And we check
+    over and over.
+
+    -> You can think of it as a bunch of kids in a van asking the parents every minute, hey, are we there yet? The parents might plead with the kids to stop asking at
+    one point, and that they will tell the kids when they arrive instead of them asking. This is how WebSockets work and we will be using a WebSocket library called
+    Socket.IO that works for both the browser and for Node.
+
+    -> With Socket.IO, we will be able to notify clients or the app running in the browser when another user has sent a chat message, that way the app will update
+    their message list instantly.
+
+    -> You might have heard of push notifications, where a server pushes an update or a message to a client or multiple clients, this works the same way.
+
+    -> Setting up Socket.IO is a bit tricker than most of the other packages, that's because it needs to tie in with Express.
+
+    -> The game plan is that we'll create a regular HTTP server with Node that will then share with Express and Socket.IO.
+
+
+========================================================================================================================================================================
+
+                                                        HOW THE SERVER.JS AND INDEX.HTML PROGRAMS WORKS
+
+========================================================================================================================================================================
+
+        1) You first of all use http.listen() which looks for any HTTP requests in the server.
+        2) In index.html it loads in a click event listener on the button and it also gets the messages.
+            1. If the click event listener is triggered then it calls the postMessage() function in index.html and passes it the values it go from the textbox.
+            2. The postMessage() function in index.html triggers a post request and passes it the message which triggers the app.post() function here in the
+            server.js file and app.post() will save the message into the mongoDB server and send back a status of 200 if everything was okay.
+            3. Then when you reload the browser the getMessages() function is called when the page loads and the steps below are triggered.
+        3) When it calls the getMessages() function in index.html, the app.get() function is triggered here in the server.js file. It will then send
+        the messages using the res.send() function, and it uses Message.find() to find the messages from the MongoDB database.
+        4) Then in the getMessages() function in index.html it will call the addMessages() function which will add each of the messages from the array
+        using a forEach loop and it will update it on the website.

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>React ⚛️</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            // This is a component, and you can see that it is returning JSX
+            // It also uses the props object and displays the name, which is passed into the component when it is used
+            function Header(props) {
+                return (
+                    <header>
+                        <h1>{props.name} Kitchen</h1>
+                    </header>
+                );
+            }
+
+            // This function also uses the props object like the one above
+            function Main(props) {
+                return (
+                    <section>
+                        <p>We serve the most {props.adjective} food around.</p>
+                    </section>
+                );
+            }
+
+            function Footer(props) {
+                return (
+                    <footer>
+                        <p>Copyright {props.year}</p>
+                    </footer>
+                );
+            }
+
+            // This component returns both of the components above and then we pass that into the ReactDOM.render() function
+            // You can also see we passed in the values for the props object, and if we want to pass in an integer you have
+            // to put it within curly braces
+            function App() {
+                return (
+                    <div>
+                        <Header name="Jinay's" />
+                        <Main adjective="amazing" />
+                        <Footer year={new Date().getFullYear() - 1} />
+                    </div>
+                );
+            }
+
+            // Here we are passing in app, and that is the syntax to do so, and you cannot put <Header /> and <Main /> on the same line because
+            // React likes to render a single component.
+            ReactDOM.render(<App />, document.getElementById("root"));
+        </script>
+    </body>
+</html>

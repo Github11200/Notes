@@ -1,0 +1,21 @@
+===========================================================================
+                                Promises
+===========================================================================
+
+    -> Promises give us another option of how to work with asynchronous code. Promises return an object which promise to do some work.
+
+    -> If an object has separate callbacks for success and for failures then promises let us work with asynchronous code in a much more synchronous way.
+
+    -> A really nice feature is that Promises can be combined into dependency chains.
+
+    -> The demonstration of promises is in sever.js where it checks for badwords using a chain of .then() callbacks.
+
+===========================================================================
+                                Async/Await
+===========================================================================
+
+    -> It makes a synchronous code look even more synchronous.
+
+    -> In order to work with await, we will need to declare our express function as async.
+
+    -> we can use await on message.save in server.js, which will return a value once it finishes and will save it into a variable called savedMessage.

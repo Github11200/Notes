@@ -1,0 +1,179 @@
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+                      ALL OF THE CODE FOR THIS SECTION IS IN THE APP.JS FILE INSIDE OF THE SRC FOLDER INSIDE OF THE REACT-APP FOLDER
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+==============================================================================
+                  Generating a project with Create React App
+==============================================================================
+
+    -> So far, we've used an index.html file to house our react components and run them locally in the browser. This can take us pretty far but now we can use a
+    tool called create react app so that we can take it from prototype to production successfully.
+
+    -> To start we can navigate to the right folder (in this case the name of this folder).
+
+    -> We also want to make sure we have node.js installed.
+
+    -> The tool we will be using is called Create React App, the link is https://create-react-app.dev/.
+
+    -> Then you can run the command npx create-react-app react-app, and this will install everything that is required.
+
+    -> Then use the cd command to navigate into the folder that was created, and in this case it was react-app so you can use cd react-app.
+
+    -> Once you are in the folder of your react app you can use npm start, and this will open a browser window, or you can open a browser window to localhost:3000
+
+    -> The files for this lesson are in the react-app.
+
+==============================================================================
+                     Touring a Create React App project
+==============================================================================
+
+    -> inside of the start folder react app, inside of the package JSON, you can see all of the different dependencies that are part of the project. The main ones
+    we should know about are react and react dom. So, react is everything we need to actually create our react components, react dom is how we add them to the
+    page, and react scripts is how we handle all of our bundling.
+
+    -> The main files that are part of our app are here in the source folder. So, the source folder contains the index.js. Think of this as being kind of like the
+    entry point to your application. It's the main JavaScript file that we can use to render our app right here to our dom.
+
+    -> Something to note is that in the index.js file inside of the src folder we have the app wrapped with this other component called react.strict mode. So,
+    think of strict mode as being a tool for highlighting any potential problems in your app. It's just a package that's going to activate some additional checks
+    to let you know if you've written any code incorrectly, but these are only going to run in development. They're not going to run in production.
+
+    -> With Create React App it will automatically refresh your browser for you every time you hit save (like live server does).
+
+==============================================================================
+                     Destructuring arrays and objects
+==============================================================================
+
+    -> A really important JavaScript concept that we want to know about is destructuring. So this is going to help us get ready to deal with state in our application.
+
+    -> Now something that's important to do here is we can use destructuring to actually grab properties from this prop's object by their key.
+
+    -> An example of this is if you have a component, lets say function App(), then instead of passing in props, you can just pass in the key, and if the key was library
+    then we can do something like function App({ library }). Now we don't have to access the props.library, and I can just grab it on the library and directly from the object.
+
+    -> This is a pattern called destructuring or destructuring an object for reaching in and grabbing it by its key.
+
+    -> We can also destructure arrays.
+
+    -> Unlike our destructuring of the object, we can't reach into the city's array and assign some sort of a property name based on a key. Instead what we would
+    need to do, is we would need to use a pattern called array destructuring.
+
+    -> To do this, if you have an array like const cities = [...], then you can replace cities with const [firstCity] = [...], then if you console.log() this then it will output
+    the first element in the array. If you do something like const [firstCity, secondCity] = [...] then console.log() the secondCity then it will print out the second element
+    in the array.
+
+    -> So what we're doing with array destructuring, is we are assigning a variable name based on a position in the array.
+
+==============================================================================
+                      Understanding the useState Hook
+==============================================================================
+
+    -> State in React is a built-in object that represents the current situation of a component. It is used to store property values that belong to the component. When the
+    state object changes, the component re-renders. State is similar to props, but it is private and fully controlled by the component. State can be defined as an object of
+    a set of observable properties that control the behavior of the component. It holds some information that may change over the lifetime of the component.
+
+    -> A React Hook is a built-in function that lets you use state and other React features without writing a class.
+
+    -> Managing state in a React application is really important and the most modern way to handle state variables in an app is to use a function called useState.
+
+    -> In order to use this function you have to use import { useState } from "react".
+
+    -> Now what we can do is we can use the stuff that we learned in the previous lesson (wiht destructuring arrays) and apply that here. So we can use const [emotion, setEmotion] = useState("happy").
+    This will set the state to happy and now you will see an array with the first value being happy.
+
+    -> We can also create buttons so that when they are clicked you can set the emotion (which was defined in the second part of the array as setEmotion, and this is a function and the second element
+    in the array from when you use useState()), and then you can set it to anything. The code below demonstrates this:
+
+import "./App.css";
+import { useState } from "react";
+
+function App() {
+    const [emotion, setEmotion] = useState("happy");
+
+    return (
+        <div className="App">
+            <h1>Current emotion is {emotion}</h1>
+            <button
+                onClick={() => {
+                    setEmotion("sad");
+                }}
+            >
+                Sad
+            </button>
+            <button
+                onClick={() => {
+                    setEmotion("excited");
+                }}
+            >
+                Excited
+            </button>
+        </div>
+    );
+}
+
+export default App;
+
+==============================================================================
+                            Working with useEffect
+==============================================================================
+
+    -> useEffect is another hook that is built into react so you can just use import { useEffect } from "react".
+
+    -> It's typically used to manage side effects that aren't related to a components render.
+
+    -> Things like console messages, loading data, and working with animations can often benefit from useEffect.
+
+    -> When using useEffect instead of setting this equal to some sort of array, we're going to pass in a function to this.
+
+    -> So an example of this is shown below:
+
+useEffect(() => {
+    console.log(`It's ${emotion} right now`);
+});
+
+    -> So now we'll see that this will log this message to our console. We think about this as being a side effect. It's not necessarily going
+    to be affected by the render but instead it's going to be something that just happens alongside the render.
+
+    -> useEffect() also takes in two arguments usually, the first is the function that's going to be called whenever we want our effect to happen.
+    But the second has to do with when the effect is actually being called.
+
+    -> If you pass in an empty array into the second parameter it means that the effect won't be called again after the first render. So, it's
+    only going to be called once as soon as the component renders, but not as we change this emotion.
+
+    -> We call this array, the dependency array because we can use it to define when this should be called.
+
+    -> Another option for this parameter is that we could pass in a property, a state value, to listen for any changes in the emotions array. This
+    is shown in the code below.
+
+useEffect(() => {
+    console.log(`It's ${emotion} right now`);
+}, [emotion]);
+
+==============================================================================
+                      Understanding the dependency array
+==============================================================================
+
+    -> We can also create a secondary effect but it is important to make sure that we're keeping track of these emotions, and we're making sure to
+    trigger these emotional changes when appropriate.
+
+==============================================================================
+                           Incorporating useReducer
+==============================================================================
+
+    -> Now lets create a check box that's going to manage state with useReducer.
+
+    -> Basically, what we can do is use the useReducer function and library (from react) instead of useSate.
+
+    -> The useReducer function will take in two arguments, the first is the function to call, and the second is the initial state.
+
+    -> This code is shown below.
+
+const [checked, setChecked] = useReducer((checked) => !checked, false);
+return (
+    <div className="App">
+        <input type="checkbox" value={checked} onChange={setChecked} />
+        <label>{checked ? "checked" : "not checked"}</label>
+    </div>
+);
+
+    -> This just helps make our code more readable instead of having a callback inside of the onChange function if we were to use useState.

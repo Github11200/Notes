@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <!--Quick way to get react to the page-->
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <title>React ⚛️</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/javascript">
+            // Now we can save this function in a seperate variable because we react we can think of the elemetns as little bits of UI that we can redner at any moment
+            let heading = React.createElement(
+                "h1", // This is what we want to create
+                null, // This is any properties we want to send
+                "Getting started with React" // This is what we want to put inside the element
+            );
+
+            // This will render a h1 element with some text and it will render it in the element with an id of "root"
+            ReactDOM.render(heading, document.getElementById("root"));
+        </script>
+    </body>
+</html>

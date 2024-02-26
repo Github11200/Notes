@@ -1,0 +1,7 @@
+-> There are two areas where heavy input/output takes place. Network and disc access.
+
+--Go in the order of the files listed below for the notes--
+
+    ***demo.js (Reading from files)***
+    ***demo-two.js (Accessing directories)***
+    ***demo-three.js (Writing to files)***
