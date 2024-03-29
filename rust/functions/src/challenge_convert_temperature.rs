@@ -6,6 +6,10 @@ fn main() {
     println!("Test passed!");
 }
 
+// fn celsius_to_fahrenheit(celsius_temp: f64) -> f64 {
+//     (1.8 * celsius_temp) + 32 as f64
+// }
+
 fn celsius_to_fahrenheit(celsius_temp: f64) -> f64 {
-    (1.8 * celsius_temp) + 32 as f64
+    celsius_temp
 }
